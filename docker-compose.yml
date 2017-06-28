@@ -1,0 +1,38 @@
+version: '2'
+services:
+
+    instance1-webapollo:
+      image: fikipollo/webapollo
+      container_name: instance1-webapollo
+      environment:
+        - WEBAPOLLO_DB_HOST=postgres-machine
+        - APOLLO_ADMIN_EMAIL=test@local.host
+        - APOLLO_ADMIN_PASSWORD=test
+        - APOLLO_ADMIN_FIRST_NAME=Ad
+        - APOLLO_ADMIN_LAST_NAME=min
+        - WEBAPOLLO_DB_USERNAME=apollo
+        - WEBAPOLLO_DB_PASSWORD=apollo
+      links:
+        - instance1-webapollo-postgres:postgres-machine
+      depends_on:
+        - instance1-webapollo-data
+      volumes_from:
+        - instance1-webapollo-data
+      ports:
+        - "8888:8080"
+
+    instance1-webapollo-postgres:
+      image: postgres
+      container_name: instance1-webapollo-postgres
+      environment:
+        - PGDATA=/data/postgresql
+      depends_on:
+        - instance1-webapollo-data
+      volumes_from:
+        - instance1-webapollo-data
+
+    instance1-webapollo-data:
+      image: busybox
+      container_name: instance1-webapollo-data
+      volumes:
+        - /home/foo/instance1/webapollo-data:/data

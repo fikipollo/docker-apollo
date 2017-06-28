@@ -11,7 +11,7 @@ environments {
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = System.getenv("WEBAPOLLO_DB_URI") ?: "jdbc:postgresql://127.0.0.1/apollo"
+            url = "jdbc:postgresql://" + (System.getenv("WEBAPOLLO_DB_HOST") ?: "127.0.0.1").replaceAll(~/\\/$/, "") + "/apollo"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -41,7 +41,7 @@ environments {
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://127.0.0.1/chado"
+            url = "jdbc:postgresql://" + (System.getenv("WEBAPOLLO_DB_HOST") ?: "127.0.0.1").replaceAll(~/\\/$/, "") + "/chado"
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
